@@ -47,7 +47,7 @@ The rules of this method are simple and always based on the box.
     1. Within each box, there may be other boxes. Multiply the opposite corners of each box and add them together
     2. When there are no corners, multiply vertically
 
-So in the first instance there are no 'coreners' and we can only multiply vertically, so we get `5x1 = 5`. Now we extend the box to the right:
+So in the first instance there are no 'corners' and we can only multiply vertically, so we get `5x1 = 5`. Now we extend the box to the right:
 
 ```
    +--+
