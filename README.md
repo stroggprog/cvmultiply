@@ -3,18 +3,21 @@
 Multiply very large integer values
 
 ## About
+This allows multiplication of values greater than the CPU or GPU can manage. On a 64-bit system that means values greater than (2^64)-1 (which is 18,446,744,073,709,551,615). Anything greater than this cannot be recognised properly as a number, and requires specialised software or libraries to perform equations. This code accepts the very large numbers (VLNs) as strings of digits, and performs multiplication on them using the cross-vertical method. It can, of course, accept smaller numbers. It only accepts positive integer values.
+
+## Cross-Vertical
 Using 'long-multiplication' requires one sub-result line per digit in the multiplier, and once all the sub-results have been resolved, they need to be added together.
 
 The problem here is it is possible to run out of space. A second feature of this method is the final result is produced starting at the least significant digit and works its way up to the most significant digit.
 
-Note that each digit in the multiplicand is multiplied by each digit in the multiplier, and the results are then added together. Doing so in a different order would produce a result starting with the most significant digit first, and the least significant digit last. If you think about it, this would give you the ability to start calling out the answer before the equation is fully solved. Sweet.
+Note that each digit in the multiplicand is multiplied by each digit in the multiplier, and the results are then added together. Doing so in a different order would eliminate the sub-results and produce a final result starting with the most significant digit first, and the least significant digit last. If you think about it, this would give you the ability to start calling out the answer before the equation is fully solved. Sweet.
 
 That method is today known as the cross-or-vertical multiplication method, or simply `cross-vertical multiply`.
 
 ## The Code
 I've written a script in PHP which encodes the method. Since computers can't handle numbers as large as the script, they are created as strings of digits, as is of course, the result. I chose PHP because code in this scripting language is extremely close to pseudo-code, and therefore is fairly easy for you to translate into your favourite programming language.
 
-There is a test script which calculates the diameter of the universe in centimetres. The parameters to this test are not guaranteed to be 100% accurate, but based on those parameters the final result is accurate. You can get out a notepad and do the long-multiplication to check it if you want.
+There is a test script which calculates the diameter of the visible universe in centimetres. The parameters to this test are not guaranteed to be 100% accurate, but based on those parameters the final result is accurate. You can get out a notepad and do the long-multiplication to check it if you want.
 
 Even easier is the example given below, which is also demonstrated by the test script `simple.php`.
 
