@@ -119,7 +119,7 @@ Multiplying the box corner we get `5x4=20, 8x1=8`. Note that the remaining numbe
     7000
 ```
 
-We've extended the box as far as it will go, so now we start shrink it from the left:
+We've extended the box as far as it will go, so now we start to shrink it from the left:
 
 ```
      +---+
@@ -159,3 +159,34 @@ Again, there are no corners, so we simply multiply vertically (`4x8=32`). Append
 ```
 
 There is a good explanation with diagrams of how this works here: [https://www.youtube.com/watch?v=c653D8F6pzk](https://www.youtube.com/watch?v=c653D8F6pzk)
+
+For a deeper explanation on boxes within boxes, consider the following:
+
+```
+
+    12345678
+  x 87654321
+```
+
+When our box reaches the maximum extent, there will be inner boxes too.
+
+```
+    +-------+
+    |1234567|
+    |8765432|
+    +-------+
+```
+
+We already know that `8x7` and `2x1` are the corners of the primary box. The first inner box is formed by the next inward numbers, which are `7x6` and `3x2`. Then we imagine another box by stepping inward again, so `6x5` and `4x3`. This consumes all the numbers except `5x4` which are vertically aligned, so we multiply them. So the result of this box (as drawn) is:
+
+```
+    8x7 = 56 +
+    2x1 =  2 +
+    7x6 = 42 +
+    3x2 =  6 +
+    6x5 = 30 +
+    4x3 = 12 +
+    5x4 = 20
+    ---------
+         168
+```
