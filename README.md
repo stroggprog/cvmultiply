@@ -57,8 +57,6 @@ If you provide the first `n` number of options in the order specified above, you
 Once you have created an instance of the `cvmultiply` class, calling either of the methods `raw()` or `format()` will perform the calculation and return the result in the desired format. Note the calculation is only performed once, so there is no overhead to calling for example, `raw()` a dozen times in a row. The first time it will perform the calculation, and on all subsequent times (including calls to `format()`) it will just return the result.
 
 ## Floating Point Results
-If there is a decimal point in either (or both) of the two numbers being multiplied, there will be the correct number of decimal places in the result. However, any trailing zeros after the decimal point will be removed. If that leaves the decimal point hanging, it too will be removed and the result will be an integer.
-
 The calculator first works out how many decimal places there are in the two operands, then removes any decimal points before performing the calculation. The decimal point is then inserted into the result at the correct location (the total number of decimal places is simply the sum of the decimal places in the two operands). After it has been inserted, any trailing zeros after the decimal point will be removed. If that leaves the decimal point hanging, it too will be removed and the result will be an integer.
 
 ## How it works
