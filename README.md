@@ -1,9 +1,14 @@
 # cvmultiply
+version: 1.2
 
-Multiply very large integer values
+Multiply very large numeric values
 
 ## About
-This allows multiplication of values greater than the CPU or GPU can manage. On a 64-bit system that means values greater than (2^64)-1 (which is 18,446,744,073,709,551,615). Anything greater than this cannot be recognised properly as a number, and requires specialised software or libraries to perform equations. This code accepts the very large numbers (VLNs) as strings of digits, and performs multiplication on them using the cross-vertical method. It can, of course, accept smaller numbers. It only accepts positive integer values.
+This allows multiplication of values greater than the CPU or GPU can manage. On a 64-bit system that means values greater than (2^64)-1 (which is 18,446,744,073,709,551,615). Anything greater than this cannot be recognised properly as a number, and requires specialised software or libraries to perform equations. This code accepts the very large numbers (VLNs) as strings of digits, and performs multiplication on them using the cross-vertical method. It can, of course, accept smaller numbers. It works properly on both integer and floating point values.
+
+Floating point results must have no more than (2^64)-3 decimal places as at least one digit and a decimal point is required to form a valid number. Floating point results with no decimal values are truncated to integer, but the decimal positions must exist before the truncation, so the decimal size will reduce the maximum integer length.
+
+If no decimal places exist in the multiplicand and the multiplier, integer mathematics prevail.
 
 ## Cross-Vertical
 Using 'long-multiplication' requires one sub-result line per digit in the multiplier, and once all the sub-results have been resolved, they need to be added together.
@@ -20,6 +25,41 @@ I've written a script in PHP which encodes the method. Since computers can't han
 There is a test script which calculates the diameter of the visible universe in centimetres. The parameters to this test are not guaranteed to be 100% accurate, but based on those parameters the final result is accurate. You can get out a notepad and do the long-multiplication to check it if you want.
 
 Even easier is the example given below, which is also demonstrated by the test script `simple.php`.
+
+## Calling
+
+```php
+// minimal creation
+$r = new cvmultiply( $multiplicand, $multiplier ); // parameters are strings
+echo $r->raw()."\n"; // "nnnn.nnnn" format or "nnnn" if integer
+echo $r->format()."\n"; // "123,456.123 456 789"
+```
+
+Note that the formatted output defaults to:
+  - thousands separator: ","
+  - decimal token: "."
+  - decimal thousands separator: " "
+
+The first two parameters are required, but can be addressed by name as `s0` and `s1`. You can change the separators too:
+
+```php
+// named parameters in correct order with default values
+//
+$r = new cvmultiply( s0: $multiplicand, // no default
+                     s1: $multiplier,   // no default
+                     milliSep: ",",     // thousands separator
+                     decToken: ".",     // decimal token (e.g. decimal point)
+                     decSep:   " " );     // separator for 'decimal thousands'
+```
+
+If you provide the first `n` number of options in the order specified above, you don't need to name them. This is typical PHP named parameter behaviour.
+
+Once you have created an instance of the `cvmultiply` class, calling either of the methods `raw()` or `format()` will perform the calculation and return the result in the desired format. Note the calculation is only performed once, so there is no overhead to calling for example, `raw()` a dozen times in a row. The first time it will perform the calculation, and on all subsequent times (including calls to `format()`) it will just return the result.
+
+## Floating Point Results
+If there is a decimal point in either (or both) of the two numbers being multiplied, there will be the correct number of decimal places in the result. However, any trailing zeros after the decimal point will be removed. If that leaves the decimal point hanging, it too will be removed and the result will be an integer.
+
+The calculator first works out how many decimal places there are in the two operands, then removes any decimal points before performing the calculation. The decimal point is then inserted into the result at the correct location (the total number of decimal places is simply the sum of the decimal places in the two operands). After it has been inserted, any trailing zeros after the decimal point will be removed. If that leaves the decimal point hanging, it too will be removed and the result will be an integer.
 
 ## How it works
 Firstly, you need two numbers, so let's take a simple pair:
